@@ -28,13 +28,34 @@ message(STATUS " - ${CMAKE_GENERATOR}")
 message(STATUS " - ${CMAKE_BUILD_TOOL}")
 message(STATUS)
 
-find_package(Boost 1.71.0 REQUIRED)
+find_package(Boost 1.76.0 REQUIRED)
+
+if (NOT Boost_FOUND)
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+    ADD_DEFINITIONS( "-DHAS_BOOST" )
+    SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/local/opt/boost")
+	   SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/local/opt/boost/lib")
+endif()
 
 if(NOT Boost_FOUND)
   message(FATAL_ERROR "Boost not found")
 endif()
 
+SET(OPENSSL_ROOT_DIR ${OPENSSL_ROOT_DIR} "/usr/local/opt/openssl")
+
 find_package(OpenSSL REQUIRED)
+
+
+if (NOT OPENSSL_FOUND)
+  
+    SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/local/opt/openssl")
+	SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/local/opt/openssl/lib")
+	INCLUDE_DIRECTORIES(${OPENSSL_INCLUDE_DIR})
+	message(STATUS " - ${OPENSSL_INCLUDE_DIR}")
+	message(STATUS " - ${OPENSSL_LIBRARY_PATH}")
+    # ADD_DEFINITIONS( "-DHAS_OPENSSL" )
+endif()
+
 
 if(NOT OPENSSL_FOUND)
   message(FATAL_ERROR "OpenSSL not found")
@@ -60,10 +81,11 @@ endif()
 
 # include_directories(${Boost_INCLUDE_DIRS})
 
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/binance/*.cpp)
+file(GLOB API_SRC_FILES ${PROJECT_SOURCE_DIR}/src/binance/*.cpp)
+file(GLOB TRADE_SRC_FILES ${PROJECT_SOURCE_DIR}/src/trade/*.cpp)
 
 
-add_executable(binanceAPI ${PROJECT_SOURCE_DIR}/src/main.cpp ${SRC_FILES})
+add_executable(binanceAPI ${PROJECT_SOURCE_DIR}/src/main.cpp ${API_SRC_FILES} ${TRADE_SRC_FILES})
 
 target_include_directories(binanceAPI PRIVATE ${PROJECT_SOURCE_DIR}/src/binance ${Boost_INCLUDE_DIRS})
 target_link_libraries(binanceAPI ${Boost_LIBRARIES} OpenSSL::SSL CURL::libcurl nlohmann_json::nlohmann_json)

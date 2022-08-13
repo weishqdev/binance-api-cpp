@@ -26,8 +26,11 @@
 #include "websocketSession.h"
 #include "binanceAPI.h"
 
-#define WS_BASE_ENDPOINT "stream.binance.com"
-#define WS_PORT "9443"
+ #define WS_BASE_ENDPOINT "stream.binance.com"
+ #define WS_PORT "9443"
+
+//#define WS_BASE_ENDPOINT "testnet.binance.vision"
+//#define WS_PORT "80"
 
 namespace Binance
 {
