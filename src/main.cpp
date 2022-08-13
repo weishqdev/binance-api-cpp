@@ -22,27 +22,29 @@ int main()
 //
 //    // run event loop
 //    ws.Run();
-    Binance::BinanceWebsocket ws;
-
-    // access combined streams
-    std::vector<std::string> streams;
-//    streams.push_back("btcusdt@aggTrade");
-    streams.push_back("btcusdt@depth");
+//    Binance::BinanceWebsocket ws;
+//
+//    // access combined streams
+//    std::vector<std::string> streams;
+////    streams.push_back("btcusdt@aggTrade");
+//    streams.push_back("btcusdt@depth");
+//
+//    std::string symbol("btcusdt@depth");
+//    ws.StreamDiffDepth(symbol, true, [](beast::error_code error, json result) -> bool
+//                       {
+//                           std::cout << error << std::endl;
+//                           std::cout << result << "\n\n =======+++++============================" << std::endl;
+//                       });
+//
+////    ws.AccessCombinedStreams(streams, [](beast::error_code, json result) -> bool
+////                            {
+////                                std::cout << result << "\n\n =======+++++============================" << std::endl;
+////                            });
+//
+//    // run event loop
+//    ws.Run();
+//
     
-    std::string symbol("btcusdt@depth");
-    ws.StreamDiffDepth(symbol, true, [](beast::error_code error, json result) -> bool
-                       {
-                           std::cout << error << std::endl;
-                           std::cout << result << "\n\n =======+++++============================" << std::endl;
-                       });
-
-//    ws.AccessCombinedStreams(streams, [](beast::error_code, json result) -> bool
-//                            {
-//                                std::cout << result << "\n\n =======+++++============================" << std::endl;
-//                            });
-
-    // run event loop
-    ws.Run();
     
     
     std::cout << "111112";
